@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Enemy
+comment1.params=health\ speed\ damage\ scoreValue
+comment1.target=Enemy(int,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ moveTowardWizard()
+comment4.params=
+comment4.target=Wizard\ getWizard()
+comment5.params=
+comment5.target=void\ attackWizard()
+comment6.params=amount
+comment6.target=void\ takeDamage(int)
+comment7.params=
+comment7.target=void\ die()
+comment8.params=
+comment8.target=int\ getHealth()
+numComments=9

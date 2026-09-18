@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=HealthItem
+comment1.params=healAmount
+comment1.target=HealthItem(int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ checkWizardCollision()
+numComments=4

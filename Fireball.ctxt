@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Fireball
+comment1.params=direction\ damage
+comment1.target=Fireball(int,\ int)
+comment2.params=
+comment2.target=void\ act()
+numComments=3
