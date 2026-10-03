@@ -8,6 +8,16 @@ public abstract class MeleeEnemy extends Enemy{
         super(health, speed, damage, scoreValue);
     }
     
+    @Override
+    public void act(){
+        moveTowardWizard();
+        attackWizard();
+        
+        if(attackCooldown > 0){
+            attackCooldown--;
+        }
+    }
+    
     private void moveTowardWizard(){
         Wizard wizard = getWizard();
 

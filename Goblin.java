@@ -1,6 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Goblin extends Enemy{
+public class Goblin extends MeleeEnemy{
     public Goblin(){
         super(50, 2, 10, 20);
         

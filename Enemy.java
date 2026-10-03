@@ -8,7 +8,7 @@ public abstract class Enemy extends Actor
     private int damage;
     private int scoreValue;
 
-    Enemy(int health, int speed, int damage, int scoreValue){
+    protected Enemy(int health, int speed, int damage, int scoreValue){
         this.health = health;
         this.speed = speed;
         this.damage = damage;

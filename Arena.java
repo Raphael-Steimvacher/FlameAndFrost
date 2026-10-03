@@ -98,6 +98,7 @@ public class Arena extends World{
             case 3:
                 spawnSlimes(3);
                 spawnGoblin(4);
+                spawnSkeleton(2);
                 spawnHealthItem();
                 break;
         }

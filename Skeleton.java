@@ -8,6 +8,7 @@ public class Skeleton extends RangedEnemy{
         imagem.scale(90, 110);
     }
     
+    @Override
     protected void attack(int direction){
         ArrowProjectile arrow = new ArrowProjectile(direction, getDamage());
         

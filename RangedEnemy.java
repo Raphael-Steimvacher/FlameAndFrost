@@ -16,7 +16,8 @@ public abstract class RangedEnemy extends Enemy{
         int cooldownTime
     ){
         super(health, speed, damage, scoreValue);
-        this.attackCooldown = attackCooldown;
+        
+        this.attackRange = attackRange;
         this.cooldownTime = cooldownTime;
     }
     
@@ -63,6 +64,24 @@ public abstract class RangedEnemy extends Enemy{
         attack(direction);
         
         attackCooldown = cooldownTime;
+    }
+    
+    private double getDistanceFromWizard(Wizard wizard){
+        int dx = wizard.getX() - getX();
+        int dy = wizard.getY() - getY();
+        
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    private int calculateAttackDirection(Wizard wizard){
+        int dx = wizard.getX() - getX();
+        int dy = wizard.getY() - getY(); 
+        
+        double radians = Math.atan2(dy, dx);
+        
+        double degrees = Math.toDegrees(radians);
+        
+        return (int) degrees;
     }
     
     protected abstract void attack(int direction);
