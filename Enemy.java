@@ -48,6 +48,24 @@ public abstract class Enemy extends Actor
 
         world.removeObject(this);
     }
+    
+    protected double getDistanceFromWizard(Wizard wizard){
+        int dx = wizard.getX() - getX();
+        int dy = wizard.getY() - getY();
+        
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    protected    int calculateAttackDirection(Wizard wizard){
+        int dx = wizard.getX() - getX();
+        int dy = wizard.getY() - getY(); 
+        
+        double radians = Math.atan2(dy, dx);
+        
+        double degrees = Math.toDegrees(radians);
+        
+        return (int) degrees;
+    }
 
     public int getHealth(){
         return health;

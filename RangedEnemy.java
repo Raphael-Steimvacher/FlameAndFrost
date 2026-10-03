@@ -66,23 +66,5 @@ public abstract class RangedEnemy extends Enemy{
         attackCooldown = cooldownTime;
     }
     
-    private double getDistanceFromWizard(Wizard wizard){
-        int dx = wizard.getX() - getX();
-        int dy = wizard.getY() - getY();
-        
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-    
-    private int calculateAttackDirection(Wizard wizard){
-        int dx = wizard.getX() - getX();
-        int dy = wizard.getY() - getY(); 
-        
-        double radians = Math.atan2(dy, dx);
-        
-        double degrees = Math.toDegrees(radians);
-        
-        return (int) degrees;
-    }
-    
     protected abstract void attack(int direction);
 }
