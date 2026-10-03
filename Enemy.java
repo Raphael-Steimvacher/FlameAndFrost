@@ -38,7 +38,7 @@ public abstract class Enemy extends Actor
         move(speed);
     }
 
-    private Wizard getWizard(){
+    protected Wizard getWizard(){
         if(getWorld() == null){
             return null;
         }
@@ -90,5 +90,13 @@ public abstract class Enemy extends Actor
 
     public int getHealth(){
         return health;
+    }
+    
+    protected int getSpeed(){
+        return speed;
+    }
+    
+    protected int getDamage(){
+        return damage;
     }
 }

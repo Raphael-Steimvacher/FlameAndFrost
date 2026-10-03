@@ -1,19 +1,19 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public abstract class EnemyProjectile extends Projectile{
+public abstract class PlayerProjectile extends Projectile{
     
-    public EnemyProjectile(int damage, int speed, int direction){
+    public PlayerProjectile(int damage, int speed, int direction){
         super(damage, speed, direction);
     }
     
     protected void checkEnemyCollision(){
-        Wizard wizard = (Wizard) getOneIntersectingObject(Wizard.class);
+        Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
 
-        if (wizard == null){
+        if (enemy == null){
             return;
         }
 
-        wizard.takeDamage(getDamage());
+        enemy.takeDamage(getDamage());
 
         if (getWorld() != null){
             getWorld().removeObject(this);

@@ -14,24 +14,16 @@ public abstract class Projectile extends Actor
     }
     
     public void act(){
-        move(speed);
+        moveProjectile();
         checkEnemyCollision();
         checkWorldBorder();
     }
     
-    private void checkEnemyCollision(){
-        Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
-
-        if (enemy == null){
-            return;
-        }
-
-        enemy.takeDamage(damage);
-
-        if (getWorld() != null){
-            getWorld().removeObject(this);
-        }
+    private void moveProjectile(){
+        move(speed);
     }
+    
+    protected abstract void checkEnemyCollision();
     
     private void checkWorldBorder(){
         if (getWorld() == null){
@@ -41,6 +33,10 @@ public abstract class Projectile extends Actor
         if (isAtEdge()){
             getWorld().removeObject(this);
         }
+    }
+    
+    protected int getDamage(){
+        return damage;
     }
 }
 
