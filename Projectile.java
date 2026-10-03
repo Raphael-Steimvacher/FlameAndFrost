@@ -15,7 +15,7 @@ public abstract class Projectile extends Actor
     
     public void act(){
         moveProjectile();
-        checkEnemyCollision();
+        checkCollision();
         checkWorldBorder();
     }
     
@@ -23,7 +23,7 @@ public abstract class Projectile extends Actor
         move(speed);
     }
     
-    protected abstract void checkEnemyCollision();
+    protected abstract void checkCollision();
     
     private void checkWorldBorder(){
         if (getWorld() == null){

@@ -6,7 +6,7 @@ public abstract class PlayerProjectile extends Projectile{
         super(damage, speed, direction);
     }
     
-    protected void checkEnemyCollision(){
+    protected void checkCollision(){
         Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
 
         if (enemy == null){

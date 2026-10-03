@@ -6,8 +6,4 @@ public class IceBlast extends PlayerProjectile{
     public IceBlast(int direction, int damage){
         super(damage, 8, direction);
     }
-    
-    public void act(){
-        super.act();
-    }
 }

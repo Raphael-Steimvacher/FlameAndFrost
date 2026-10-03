@@ -6,7 +6,7 @@ public abstract class EnemyProjectile extends Projectile{
         super(damage, speed, direction);
     }
     
-    protected void checkEnemyCollision(){
+    protected void checkCollision(){
         Wizard wizard = (Wizard) getOneIntersectingObject(Wizard.class);
 
         if (wizard == null){

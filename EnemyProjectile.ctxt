@@ -3,5 +3,5 @@ comment0.target=EnemyProjectile
 comment1.params=damage\ speed\ direction
 comment1.target=EnemyProjectile(int,\ int,\ int)
 comment2.params=
-comment2.target=void\ checkEnemyCollision()
+comment2.target=void\ checkCollision()
 numComments=3

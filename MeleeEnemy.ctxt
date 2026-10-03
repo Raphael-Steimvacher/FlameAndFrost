@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=MeleeEnemy
+comment1.params=health\ speed\ damage\ scoreValue
+comment1.target=MeleeEnemy(int,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ moveTowardWizard()
+comment3.params=
+comment3.target=void\ attackWizard()
+numComments=4

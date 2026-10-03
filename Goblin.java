@@ -7,8 +7,4 @@ public class Goblin extends Enemy{
         GreenfootImage imagem = getImage();
         imagem.scale(90, 90);
     }
-    
-    public void act(){
-        super.act();
-    }
 }

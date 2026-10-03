@@ -1,14 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Skeleton extends Enemy{
+public class Skeleton extends RangedEnemy{
     public Skeleton(){
-        super(40, 2, 15, 30);
+        super(40, 2, 15, 30,300, 60);
         
         GreenfootImage imagem = getImage();
         imagem.scale(90, 110);
     }
     
-    public void act(){
-        super.act();
+    protected void attack(int direction){
+        ArrowProjectile arrow = new ArrowProjectile(direction, getDamage());
+        
+        getWorld().addObject(arrow, getX(), getY());
     }
 }

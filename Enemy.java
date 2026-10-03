@@ -8,34 +8,11 @@ public abstract class Enemy extends Actor
     private int damage;
     private int scoreValue;
 
-    private int attackCooldown = 0;
-
-    public Enemy(int health, int speed, int damage, int scoreValue){
+    Enemy(int health, int speed, int damage, int scoreValue){
         this.health = health;
         this.speed = speed;
         this.damage = damage;
         this.scoreValue = scoreValue;
-    }
-
-    public void act(){
-        moveTowardWizard();
-        attackWizard();
-
-        if(attackCooldown > 0){
-            attackCooldown--;
-        }
-    }
-
-    private void moveTowardWizard(){
-        Wizard wizard = getWizard();
-
-        if(wizard == null){
-            return;
-        }
-
-        turnTowards(wizard.getX(), wizard.getY());
-
-        move(speed);
     }
 
     protected Wizard getWizard(){
@@ -50,22 +27,6 @@ public abstract class Enemy extends Actor
         }
 
         return wizards.get(0);
-    }
-    
-    private void attackWizard(){
-        Wizard wizard = (Wizard) getOneIntersectingObject(Wizard.class);
-        
-        if(wizard == null){
-            return;
-        }
-        
-        if(attackCooldown > 0){
-            return;
-        }
-        
-        wizard.takeDamage(damage);
-        
-        attackCooldown = 30;
     }
 
     public void takeDamage(int amount){
