@@ -21,12 +21,20 @@ public abstract class Enemy extends Actor
         }
 
         List<Wizard> wizards = getWorld().getObjects(Wizard.class);
-
-        if(wizards.isEmpty()){
-            return null;
+        
+        Wizard nearestWizard = null;
+        double nearestDistance = Double.MAX_VALUE;
+        
+        for(Wizard wizard : wizards){
+            double distance = getDistanceFromWizard(wizard);
+            
+            if(distance < nearestDistance){
+                nearestDistance = distance;
+                nearestWizard = wizard;
+            }
         }
 
-        return wizards.get(0);
+        return nearestWizard;
     }
 
     public void takeDamage(int amount){
@@ -39,14 +47,22 @@ public abstract class Enemy extends Actor
 
     private void die(){
         World world = getWorld();
-
-        if(world instanceof Arena){
-            Arena arena = (Arena) world;
-
-            arena.addScore(scoreValue);
+        
+        if(world == null){
+            return;
         }
 
         world.removeObject(this);
+        
+        if(world instanceof Arena){
+            Arena arena = (Arena) world;
+            
+            if(arena.getObjects(Wizard.class).isEmpty()){
+                arena.gameOver();
+            }
+            
+            arena.addScore(scoreValue);
+        }
     }
     
     protected double getDistanceFromWizard(Wizard wizard){

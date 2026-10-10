@@ -5,7 +5,7 @@ public class FireWizard extends Wizard
     private int attackCooldown = 0;
     
     public FireWizard(){
-        super(10000, 4, 20);
+        super(10000, 4, 20, "w", "s", "a", "d");
 
         GreenfootImage imagem = getImage();
         imagem.scale(120, 120);
@@ -23,6 +23,10 @@ public class FireWizard extends Wizard
     }
     
     private void attack(){
+        if(getWorld() == null){
+            return;
+        }
+        
         if (!Greenfoot.isKeyDown("space")){
             return;
         }

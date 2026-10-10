@@ -9,35 +9,74 @@ public abstract class Wizard extends Actor
     
     private int lastDirectionX = 1;
     private int lastDirectionY = 0;
+    
+    private final String upKey;
+    private final String downKey;
+    private final String leftKey;
+    private final String rightKey;
         
-    public Wizard(int health, int speed, int damage){
+    public Wizard(
+        int health, 
+        int speed, 
+        int damage,
+        String upKey,
+        String downKey,
+        String leftKey,
+        String rightKey
+    ){
         this.health = health;
         this.maxHealth = health;
         this.speed = speed;
         this.damage = damage;
+        
+        this.upKey = upKey;
+        this.downKey = downKey;
+        this.leftKey = leftKey;
+        this.rightKey = rightKey;
     }
     
     public void act(){
         moveWizard();
     }
     
+    private boolean isMovementKeyDown(
+        String configuredKey, 
+        String wasdKey, 
+        String arrowKey,
+        boolean singlePlayer
+    ){
+        if(singlePlayer){
+            return Greenfoot.isKeyDown(wasdKey) || Greenfoot.isKeyDown(arrowKey);
+        }
+        
+        return Greenfoot.isKeyDown(configuredKey);
+    }
+    
     private void moveWizard(){
+        World world = getWorld();
+        
+        if(world == null){
+            return;
+        }
+        
+        boolean singlePlayer = world instanceof Arena && ((Arena) world).isSinglePlayer();
+        
         int dx = 0;
         int dy = 0;
     
-        if(Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("w")){
+        if(isMovementKeyDown(upKey, "W", "up", singlePlayer)){
             dy = -1;
         }
     
-        if(Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("s")){
+        if(isMovementKeyDown(downKey, "s", "down", singlePlayer)){
             dy = 1;
         }
     
-        if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
+        if(isMovementKeyDown(rightKey, "d", "right", singlePlayer)){
             dx = 1;
         }
     
-        if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
+        if(isMovementKeyDown(leftKey, "a", "left", singlePlayer)){
             dx = -1;
         }
         

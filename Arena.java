@@ -14,10 +14,21 @@ public class Arena extends World{
     private boolean batteStarted = false;
     private boolean gamefineshed = false;
     
+    private final int playerCount;
     
+    public Arena(){
+        this(1);
+    }
     
-    public Arena(){    
+    public Arena(int playerCount){    
         super(1600, 800, 1);
+        
+        if(playerCount != 1 && playerCount != 2){
+            throw new IllegalArgumentException("A qauntidade de jogadores deve ser 1 ou 2");
+        }
+        
+        this.playerCount = playerCount;
+        
         setBackground(currentStage.getBackgroundImage());
         prepare();
     }
@@ -31,28 +42,67 @@ public class Arena extends World{
     }
 
     private void prepare(){
-        FireWizard wizard = new FireWizard();
-        addObject(wizard, getWidth() / 2, getHeight() / 2);
-    }
-
-    private void updateHUD(){
-        List<Wizard> wizards = getObjects(Wizard.class);
-
-        if(!wizards.isEmpty()){
-            Wizard wizard = wizards.get(0);
-
-            showText("Vida: " + wizard.getHealth(), 100, 30);
+        FireWizard fireWizard = new FireWizard();
+        addObject(fireWizard, getWidth() / 2, getHeight() / 2);
+        
+        if(playerCount == 2){
+            IceWizard iceWizard = new IceWizard();
+            addObject(iceWizard, getWidth() / 2, getHeight() / 2);
         }
         
-        showText("Pontos: " + score , 300, 30);
+        positionPlayers();
+    }
+    
+    private void positionPlayers(){
+        List<Wizard> wizards = getObjects(Wizard.class);
         
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
+        
+        if(wizards.size() == 1){
+            wizards.get(0).setLocation(centerX, centerY);
+            
+            return;
+        }
+        
+        for(Wizard wizard : wizards){
+            int offsetX = wizard instanceof FireWizard
+                ? -80
+                : 80;
+            
+            wizard.setLocation(centerX + offsetX, centerY);
+        }
+    }
+
+    private void updateHUD() {
+        List<FireWizard> fireWizards = getObjects(FireWizard.class);
+    
+        String fireHealth = fireWizards.isEmpty()
+            ? "Eliminado"
+            : String.valueOf(fireWizards.get(0).getHealth());
+    
+        showText("P1 Fogo: " + fireHealth, 180, 30);
+    
+        if (playerCount == 2) {
+            List<IceWizard> iceWizards =
+                getObjects(IceWizard.class);
+    
+            String iceHealth = iceWizards.isEmpty()
+                ? "Eliminado"
+                : String.valueOf(iceWizards.get(0).getHealth());
+    
+            showText("P2 Gelo: " + iceHealth, 480, 30);
+        }
+    
+        showText("Pontos: " + score, 760, 30);
+    
         String waveText = currentWave == 0
             ? "Próxima onda: 1/" + WAVES_PER_STAGE
             : "Onda: " + currentWave + "/" + WAVES_PER_STAGE;
-        showText(waveText, 500, 30);
-        
-        String displayName = currentStage.getDisplayName();
-        showText("Cenario: " + displayName, 800, 30);
+    
+        showText(waveText, 1000, 30);
+    
+        showText("Cenário: " + currentStage.getDisplayName(), 1320, 30);
     }
 
     public void addScore(int points){
@@ -217,6 +267,10 @@ public class Arena extends World{
     private void winGame(){
         gamefineshed = true;
         Greenfoot.setWorld(new FinalScreen(true, score));
+    }
+    
+    public boolean isSinglePlayer(){
+        return playerCount == 1;
     }
 
     private void takePositionClick(){
