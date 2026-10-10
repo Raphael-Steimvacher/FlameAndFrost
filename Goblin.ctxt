@@ -2,4 +2,6 @@
 comment0.target=Goblin
 comment1.params=
 comment1.target=Goblin()
-numComments=2
+comment2.params=health
+comment2.target=Goblin(int)
+numComments=3

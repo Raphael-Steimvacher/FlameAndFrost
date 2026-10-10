@@ -123,31 +123,23 @@ public class Arena extends World{
 
     private void startNextWave(){
         currentWave++;
-
-        switch(currentWave){
-            case 1:
-                spawnSlimes(5);
-                spawnHealthItem();
-                break;
-
-            case 2:
-                spawnSlimes(5);
-                spawnGoblin(2);
-                spawnHealthItem();
-                break;
-
-            case 3:
-                spawnSlimes(3);
-                spawnGoblin(4);
-                spawnSkeleton(2);
-                spawnHealthItem();
-                break;
+        
+        if(currentWave == WAVES_PER_STAGE){
+            Golem golem = new Golem(
+                currentStage.getGolemImage(),
+                currentStage.getGolemHealth()
+            );
             
-            case 4:
-                spawnEnemy(new Golem(currentStage.getGolemImage()));
-                spawnHealthItem();
-                break;
+            spawnEnemy(golem);
+        } else {
+            WaveConfig wave = currentStage.getWaveConfig(currentWave);
+            
+            spawnSlimes(wave.getSlimeAmount());
+            spawnGoblin(wave.getGoblinAmount());
+            spawnSkeleton(wave.getSkeletonAmount());
         }
+        
+        spawnHealthItem();
     }
 
     private void spawnEnemy(Enemy enemy){
@@ -163,20 +155,26 @@ public class Arena extends World{
     }
 
     private void spawnSlimes(int amount){
+        int health = currentStage.getSlimeHealth();
+        
         for (int i = 0; i < amount; i++){
-            spawnEnemy(new Slime());
+            spawnEnemy(new Slime(health));
         }
     }
     
     private void spawnGoblin(int amount){
+        int health = currentStage.getGoblinHealth();
+        
         for (int i = 0; i < amount; i++){
-            spawnEnemy(new Goblin());
+            spawnEnemy(new Goblin(health));
         }
     }
     
     private void spawnSkeleton(int amount){
+        int health = currentStage.getSkeletonHealth();
+        
         for (int i = 0; i < amount; i++){
-            spawnEnemy(new Skeleton());
+            spawnEnemy(new Skeleton(health));
         }
     }
     

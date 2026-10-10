@@ -2,4 +2,6 @@
 comment0.target=Slime
 comment1.params=
 comment1.target=Slime()
-numComments=2
+comment2.params=health
+comment2.target=Slime(int)
+numComments=3
