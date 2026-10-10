@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=WizardType
+comment1.params=displayName\ imageName
+comment1.target=WizardType(java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getDisplayName()
+comment3.params=
+comment3.target=java.lang.String\ getImageName()
+comment4.params=
+comment4.target=Wizard\ createWizard()
+numComments=5

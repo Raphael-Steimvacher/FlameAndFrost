@@ -15,19 +15,29 @@ public class Arena extends World{
     private boolean gamefineshed = false;
     
     private final int playerCount;
+    private final WizardType soloWizardType;
     
     public Arena(){
-        this(1);
+        this(1, WizardType.FIRE);
     }
     
-    public Arena(int playerCount){    
+    public Arena(int playerCount){
+        this(playerCount, WizardType.FIRE);
+    }
+    
+    public Arena(int playerCount, WizardType soloWizardType){    
         super(1600, 800, 1);
         
         if(playerCount != 1 && playerCount != 2){
             throw new IllegalArgumentException("A qauntidade de jogadores deve ser 1 ou 2");
         }
         
+        if(soloWizardType == null){
+            throw new IllegalArgumentException("Escolha um personagem");
+        }
+        
         this.playerCount = playerCount;
+        this.soloWizardType = soloWizardType;
         
         setBackground(currentStage.getBackgroundImage());
         prepare();
@@ -42,14 +52,16 @@ public class Arena extends World{
     }
 
     private void prepare(){
-        FireWizard fireWizard = new FireWizard();
-        addObject(fireWizard, getWidth() / 2, getHeight() / 2);
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
         
-        if(playerCount == 2){
-            IceWizard iceWizard = new IceWizard();
-            addObject(iceWizard, getWidth() / 2, getHeight() / 2);
+        if(isSinglePlayer()){
+            addObject(soloWizardType.createWizard(), centerX, centerY);
+        } else {
+            addObject(new FireWizard(), centerX, centerY);
+            addObject(new IceWizard(), centerX, centerY);
         }
-        
+    
         positionPlayers();
     }
     
@@ -73,25 +85,35 @@ public class Arena extends World{
             wizard.setLocation(centerX + offsetX, centerY);
         }
     }
+    
+    private String getWizardHealth(Class<? extends Wizard> wizardClass){
+        List<? extends Wizard> wizards = getObjects(wizardClass);
+        
+        return wizards.isEmpty()
+            ? "Eliminado"
+            : String.valueOf(wizards.get(0).getHealth());
+    }
 
     private void updateHUD() {
-        List<FireWizard> fireWizards = getObjects(FireWizard.class);
+        if (isSinglePlayer()) {
+            showText(
+                "P1 " + soloWizardType.getDisplayName()
+                    + ": " + getWizardHealth(Wizard.class),
+                180,
+                30
+            );
+        } else {
+            showText(
+                "P1 Fogo: " + getWizardHealth(FireWizard.class),
+                180,
+                30
+            );
     
-        String fireHealth = fireWizards.isEmpty()
-            ? "Eliminado"
-            : String.valueOf(fireWizards.get(0).getHealth());
-    
-        showText("P1 Fogo: " + fireHealth, 180, 30);
-    
-        if (playerCount == 2) {
-            List<IceWizard> iceWizards =
-                getObjects(IceWizard.class);
-    
-            String iceHealth = iceWizards.isEmpty()
-                ? "Eliminado"
-                : String.valueOf(iceWizards.get(0).getHealth());
-    
-            showText("P2 Gelo: " + iceHealth, 480, 30);
+            showText(
+                "P2 Gelo: " + getWizardHealth(IceWizard.class),
+                480,
+                30
+            );
         }
     
         showText("Pontos: " + score, 760, 30);
@@ -102,7 +124,11 @@ public class Arena extends World{
     
         showText(waveText, 1000, 30);
     
-        showText("Cenário: " + currentStage.getDisplayName(), 1320, 30);
+        showText(
+            "Cenário: " + currentStage.getDisplayName(),
+            1320,
+            30
+        );
     }
 
     public void addScore(int points){

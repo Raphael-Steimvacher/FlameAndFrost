@@ -45,24 +45,18 @@ public abstract class Enemy extends Actor
         }
     }
 
-    private void die(){
+    private void die() {
         World world = getWorld();
-        
-        if(world == null){
+    
+        if (world == null) {
             return;
         }
-
-        world.removeObject(this);
-        
-        if(world instanceof Arena){
-            Arena arena = (Arena) world;
-            
-            if(arena.getObjects(Wizard.class).isEmpty()){
-                arena.gameOver();
-            }
-            
-            arena.addScore(scoreValue);
+    
+        if (world instanceof Arena) {
+            ((Arena) world).addScore(scoreValue);
         }
+    
+        world.removeObject(this);
     }
     
     protected double getDistanceFromWizard(Wizard wizard){

@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.GreenfootImage;
 
 public abstract class Wizard extends Actor
 {
@@ -14,6 +15,12 @@ public abstract class Wizard extends Actor
     private final String downKey;
     private final String leftKey;
     private final String rightKey;
+    private final String attackKey;
+    
+    private static final int ATACK_COOLDOWN_TIME = 15;
+    
+    private int attackCooldown = 0;
+    private boolean attackInputEnabled = false;
         
     public Wizard(
         int health, 
@@ -22,7 +29,9 @@ public abstract class Wizard extends Actor
         String upKey,
         String downKey,
         String leftKey,
-        String rightKey
+        String rightKey,
+        String attackKey,
+        String imageName
     ){
         this.health = health;
         this.maxHealth = health;
@@ -33,20 +42,36 @@ public abstract class Wizard extends Actor
         this.downKey = downKey;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
+        this.attackKey = attackKey;
+        
+        GreenfootImage image = new GreenfootImage(imageName);
+        image.scale(120, 120);
+        setImage(image);
     }
     
+    @Override
     public void act(){
+        if(getWorld() == null){
+            return;
+        }
+        
         moveWizard();
+        
+        if(attackCooldown > 0){
+            attackCooldown--;
+        }
+        
+        attack();
     }
     
-    private boolean isMovementKeyDown(
+    private boolean isControlKeyDown(
         String configuredKey, 
-        String wasdKey, 
-        String arrowKey,
+        String firstSoloKey, 
+        String secondSoloKey,
         boolean singlePlayer
     ){
         if(singlePlayer){
-            return Greenfoot.isKeyDown(wasdKey) || Greenfoot.isKeyDown(arrowKey);
+            return Greenfoot.isKeyDown(firstSoloKey) || Greenfoot.isKeyDown(secondSoloKey);
         }
         
         return Greenfoot.isKeyDown(configuredKey);
@@ -64,19 +89,19 @@ public abstract class Wizard extends Actor
         int dx = 0;
         int dy = 0;
     
-        if(isMovementKeyDown(upKey, "W", "up", singlePlayer)){
+        if(isControlKeyDown(upKey, "w", "up", singlePlayer)){
             dy = -1;
         }
     
-        if(isMovementKeyDown(downKey, "s", "down", singlePlayer)){
+        if(isControlKeyDown(downKey, "s", "down", singlePlayer)){
             dy = 1;
         }
     
-        if(isMovementKeyDown(rightKey, "d", "right", singlePlayer)){
+        if(isControlKeyDown(rightKey, "d", "right", singlePlayer)){
             dx = 1;
         }
     
-        if(isMovementKeyDown(leftKey, "a", "left", singlePlayer)){
+        if(isControlKeyDown(leftKey, "a", "left", singlePlayer)){
             dx = -1;
         }
         
@@ -109,6 +134,46 @@ public abstract class Wizard extends Actor
         setLocation(newX, newY);
     }
     
+    private boolean isAttackKeyDown(){
+        World world = getWorld();
+        
+        boolean singledPlayer = world instanceof Arena && ((Arena) world).isSinglePlayer();
+        
+        boolean pressed = isControlKeyDown(attackKey, "space", "enter", singledPlayer);
+        
+        if(!attackInputEnabled){
+            if(!pressed){
+                attackInputEnabled = true;
+            }
+            
+            return false;
+        }
+        
+        return pressed;
+    }
+    
+    private void attack(){
+        if(!isAttackKeyDown() || attackCooldown > 0){
+            return;
+        }
+        
+        int direction = calculateAttackDirection();
+        
+        PlayerProjectile projectile = createProjectile(direction, getDamage());
+        
+        getWorld().addObject(projectile, getX(), getY());
+        
+        attackCooldown = ATACK_COOLDOWN_TIME;
+    }
+    
+    private int calculateAttackDirection(){
+        double radians = Math.atan2(lastDirectionY, lastDirectionX);
+        
+        return (int) Math.toDegrees(radians);
+    }
+    
+    protected abstract PlayerProjectile createProjectile(int direction, int damage);
+    
     public void takeDamage(int amount){
         health -= amount;
         
@@ -125,13 +190,21 @@ public abstract class Wizard extends Actor
         }
     }
     
-    private void die(){
+   private void die() {
         World world = getWorld();
-        
-        if(world instanceof Arena){
+    
+        if (world == null) {
+            return;
+        }
+    
+        world.removeObject(this);
+    
+        if (world instanceof Arena) {
             Arena arena = (Arena) world;
-            
-            arena.gameOver();
+    
+            if (arena.getObjects(Wizard.class).isEmpty()) {
+                arena.gameOver();
+            }
         }
     }
     

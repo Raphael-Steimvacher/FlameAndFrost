@@ -1,6 +1,8 @@
 import greenfoot.*;
 
 public class FinalScreen extends World{
+    private boolean returnEnabled = false;
+    
     public FinalScreen(boolean victory, int score){
         super(1600, 800, 1);
 
@@ -15,8 +17,15 @@ public class FinalScreen extends World{
         showText("Pressione ENTER para voltar ao menu", getWidth() / 2, 500);
     }
 
-    public void act(){
-        if (Greenfoot.isKeyDown("enter")){
+    @Override
+    public void act() {
+        if (!Greenfoot.isKeyDown("enter")) {
+            returnEnabled = true;
+    
+            return;
+        }
+    
+        if (returnEnabled) {
             Greenfoot.setWorld(new Menu());
         }
     }
