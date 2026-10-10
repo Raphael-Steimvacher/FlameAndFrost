@@ -3,9 +3,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Golem extends HybridEnemy{
     
     public Golem(){
+        this("green-golem.png");
+    }
+    
+    public Golem(String imageName){
         super(300, 1, 25, 100, 100, 350, 90, 120);
         
-        GreenfootImage image = new GreenfootImage("green-golem.png");
+        GreenfootImage image = new GreenfootImage(imageName);
         image.scale(140, 140);
         setImage(image);
     }
