@@ -15,7 +15,7 @@ public abstract class HybridEnemy extends Enemy{
         int speed,
         int damage,
         int scoreValue,
-        int meleeRage,
+        int meleeRange,
         int rangedRange,
         int meleeCooldownTime,
         int rangedCooldownTime

@@ -58,7 +58,7 @@ public class Arena extends World{
             return;
         }
 
-        if(currentWave > 3){
+        if(currentWave >= 4){
             winGame();
 
             return;
@@ -101,6 +101,11 @@ public class Arena extends World{
                 spawnSkeleton(2);
                 spawnHealthItem();
                 break;
+            
+            case 4:
+                spawnGolem(1);
+                spawnHealthItem();
+                break;
         }
     }
 
@@ -128,6 +133,12 @@ public class Arena extends World{
     private void spawnSkeleton(int amount){
         for (int i = 0; i < amount; i++){
             spawnEnemy(new Skeleton());
+        }
+    }
+    
+    private void spawnGolem(int amount){
+        for (int i = 0; i < amount; i++){
+            spawnEnemy(new Golem());
         }
     }
     

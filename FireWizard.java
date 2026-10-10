@@ -5,7 +5,7 @@ public class FireWizard extends Wizard
     private int attackCooldown = 0;
     
     public FireWizard(){
-        super(100, 4, 20);
+        super(10000, 4, 20);
 
         GreenfootImage imagem = getImage();
         imagem.scale(120, 120);

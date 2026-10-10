@@ -2,8 +2,6 @@
 comment0.target=Golem
 comment1.params=
 comment1.target=Golem()
-comment2.params=
-comment2.target=void\ act()
-comment3.params=direction
-comment3.target=void\ rangedAttack(int)
-numComments=4
+comment2.params=direction
+comment2.target=void\ rangedAttack(int)
+numComments=3

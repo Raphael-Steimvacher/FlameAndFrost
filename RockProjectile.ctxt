@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=RockProjectile
+comment1.params=direction\ damage
+comment1.target=RockProjectile(int,\ int)
+numComments=2

@@ -4,15 +4,15 @@ public class Golem extends HybridEnemy{
     
     public Golem(){
         super(300, 1, 25, 100, 100, 350, 90, 120);
-    }
-    
-    public void act(){
-        // Add your action code here.
+        
+        GreenfootImage image = new GreenfootImage("green-golem.png");
+        image.scale(140, 140);
+        setImage(image);
     }
     
     @Override
     protected void rangedAttack(int direction){
-        RockProjectile Rock = new RockProjectile(direction, getDamage());
+        RockProjectile rock = new RockProjectile(direction, getDamage());
         
         getWorld().addObject(rock, getX(), getY());
     }
