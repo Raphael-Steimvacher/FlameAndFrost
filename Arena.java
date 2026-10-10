@@ -50,7 +50,9 @@ public class Arena extends World{
             ? "Próxima onda: 1/" + WAVES_PER_STAGE
             : "Onda: " + currentWave + "/" + WAVES_PER_STAGE;
         showText(waveText, 500, 30);
-        showText("Cenario: ", 800, 30);
+        
+        String displayName = currentStage.getDisplayName();
+        showText("Cenario: " + displayName, 800, 30);
     }
 
     public void addScore(int points){
@@ -112,7 +114,7 @@ public class Arena extends World{
         setBackground(currentStage.getBackgroundImage());
         
         for(Wizard wizard : getObjects(Wizard.class)){
-            wizard.setLocation(getWidth() / 2, getWidth() / 2);
+            wizard.setLocation(getWidth() / 2, getHeight() / 2);
         }
         
         waveDelay = STAGE_DELAY;
@@ -229,88 +231,6 @@ public class Arena extends World{
 
                 showText("X: " + x + " | Y: " + y, 300, 100);
             }
-        }
-    }
-    
-    /* ===========================================================================================
-     * Daqui para baixo eu queria separar em um unico arquivo pq seria basicamente configs de enum
-     * ===========================================================================================
-     */
-    
-    public enum ArenaStage {
-        FOREST(
-            "Floresta",
-            "arena-floresta-1600x800.png",
-            "green-golem.png",
-            new int[][] {
-                {550, 950, 0, 130},
-                {550, 1050, 700, 799},
-                {220, 380, 460, 590},
-                {1200, 1360, 400, 550}
-            }
-        ),
-        DESERT(
-            "Deserto",
-            "arena-deserto-1600x800.png",
-            "dust-golem.png",
-            new int[][] {
-                {700, 900, 180, 230},
-                {650, 950, 600, 650},
-                {350, 420, 350, 450},
-                {1180, 1240, 350, 450}
-            }
-        ),
-        LAVA(
-            "Lava",
-            "arena-vulcão-1600x800.png",
-            "lava-golem.png",
-            new int[][] {
-                {700, 900, 180, 220},
-                {700, 900, 580, 620},
-                {500, 550, 350, 450},
-                {1040, 1080, 350, 450}
-            }
-        );
-
-        private final String displayName;
-        private final String backgroundImage;
-        private final String golemImage;
-        private final int[][] spawnZones;
-    
-        ArenaStage(
-            String displayName,
-            String backgroundImage,
-            String golemImage,
-            int[][] spawnZones
-        ){
-            this.displayName = displayName;
-            this.backgroundImage = backgroundImage;
-            this.golemImage = golemImage;
-            this.spawnZones = spawnZones;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    
-        public String getBackgroundImage() {
-            return backgroundImage;
-        }
-    
-        public String getGolemImage() {
-            return golemImage;
-        }
-    
-        // Each row: minX, maxX, minY, maxY.
-        public int[][] getSpawnZones() {
-            return spawnZones;
-        }
-    
-        public ArenaStage getNextStage() {
-            ArenaStage[] stages = values();
-            int nextIndex = ordinal() + 1;
-    
-            return nextIndex < stages.length ? stages[nextIndex] : null;
         }
     }
 }

@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=ArenaStage
+comment0.text=\ Lembrando\:\n\ \ \ \ \ \ Superior\n\ \ \ \ \ \ Inferior\n\ \ \ \ \ \ Esquerda\n\ \ \ \ \ \ Direita\n
+comment1.params=displayName\ backgroundImage\ golemImage\ spawnZones
+comment1.target=ArenaStage(java.lang.String,\ java.lang.String,\ java.lang.String,\ int[][])
+comment2.params=
+comment2.target=java.lang.String\ getDisplayName()
+comment3.params=
+comment3.target=java.lang.String\ getBackgroundImage()
+comment4.params=
+comment4.target=java.lang.String\ getGolemImage()
+comment5.params=
+comment5.target=int[][]\ getSpawnZones()
+comment6.params=
+comment6.target=ArenaStage\ getNextStage()
+numComments=7
