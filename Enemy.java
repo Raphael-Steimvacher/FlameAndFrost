@@ -7,6 +7,7 @@ public abstract class Enemy extends Actor
     private int speed;
     private int damage;
     private int scoreValue;
+    private boolean facingLeft = false;
 
     protected Enemy(int health, int speed, int damage, int scoreValue){
         this.health = health;
@@ -35,6 +36,32 @@ public abstract class Enemy extends Actor
         }
 
         return nearestWizard;
+    }
+    
+    protected void moveTowardsWizard(Wizard wizard, int stopDistance){
+        int dx = wizard.getX() - getX();
+        
+        // se tiver olhando para sim nao precisa executar o alinhamento
+        if(dx != 0){
+            boolean shouldFaceLeft = dx < 0;
+            
+            if(shouldFaceLeft != facingLeft){
+                getImage().mirrorHorizontally();
+                facingLeft = shouldFaceLeft;
+            }
+        }
+        
+        setRotation(0);
+        
+        if(getDistanceFromWizard(wizard) <= stopDistance){
+            return;
+        }
+        
+        turnTowards(wizard.getX(), wizard.getY());
+        move(getSpeed());
+        
+        //manter o boneco em pe epois do deslocamento
+        setRotation(0);
     }
 
     public void takeDamage(int amount){

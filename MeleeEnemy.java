@@ -25,9 +25,7 @@ public abstract class MeleeEnemy extends Enemy{
             return;
         }
 
-        turnTowards(wizard.getX(), wizard.getY());
-
-        move(getSpeed());
+        moveTowardsWizard(wizard, 0);
     }
     
     private void attackWizard(){

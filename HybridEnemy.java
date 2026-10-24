@@ -44,15 +44,7 @@ public abstract class HybridEnemy extends Enemy{
     }
     
     private void moveTowardWizard(Wizard wizard){
-        double distance = getDistanceFromWizard(wizard);
-        
-        if(distance <= meleeRange){
-            return;
-        }
-        
-        turnTowards(wizard.getX(), wizard.getY());
-        
-        move(getSpeed());
+        moveTowardsWizard(wizard, meleeRange);
     }
     
     private void handleAttack(Wizard wizard){

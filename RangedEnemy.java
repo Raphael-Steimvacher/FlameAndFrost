@@ -37,15 +37,7 @@ public abstract class RangedEnemy extends Enemy{
     }
     
     private void moveTowardWizard(Wizard wizard){
-        double distance = getDistanceFromWizard(wizard);
-        
-        if(distance <= attackRange){
-            return;
-        }
-        
-        turnTowards(wizard.getX(), wizard.getY());
-        
-        move(getSpeed());
+        moveTowardsWizard(wizard, attackRange);
     }
     
     private void attackWizard(Wizard wizard){
