@@ -7,6 +7,9 @@ public class Arena extends World{
     private static final int STAGE_DELAY = 180;
     
     private int score = 0;
+    private int timeBonusScore = 0;
+    private int flawlessBonusScore = 0;
+    private final WavePerformance wavePerformance = new WavePerformance();
     private ArenaStage currentStage = ArenaStage.FOREST;
 
     private int currentWave = 0;
@@ -44,11 +47,9 @@ public class Arena extends World{
     }
 
     public void act(){
-        updateHUD();
-
         takePositionClick();
-
         manageWaves();
+        updateHUD();
     }
 
     private void prepare(){
@@ -117,6 +118,17 @@ public class Arena extends World{
         }
     
         showText("Pontos: " + score, 760, 30);
+        
+        String performanceText = wavePerformance.isActive()
+            ? String.format(
+                java.util.Locale.ROOT,
+                "Tempo: %.1fs | Sem dano: %s",
+                wavePerformance.getElapsedSeconds(),
+                wavePerformance.isFlawless() ? "SIM" : "NÃO"
+            )
+            : "";
+        
+        showText(performanceText, getWidth() / 2, 65);
     
         String waveText = currentWave == 0
             ? "Próxima onda: 1/" + WAVES_PER_STAGE
@@ -133,6 +145,61 @@ public class Arena extends World{
 
     public void addScore(int points){
         score += points;
+    }
+    
+    public void registerPlayerDamage(int amount) {
+        if (!gamefineshed) {
+            wavePerformance.registerDamage(amount);
+        }
+    }
+    
+    public void onEnemyDefeated(int points) {
+        if (gamefineshed) {
+            return;
+        }
+    
+        addScore(points);
+    
+        if (getObjects(Enemy.class).isEmpty()) {
+            completeWave();
+        }
+    }
+    
+    private void completeWave() {
+        if (!wavePerformance.finish()) {
+            return;
+        }
+    
+        WaveScoreConfig config =
+            currentStage.getWaveScoreConfig(currentWave);
+    
+        double seconds = wavePerformance.getElapsedSeconds();
+    
+        int timeBonus = config.getTimeBonus(seconds);
+    
+        int flawlessBonus = wavePerformance.isFlawless()
+            ? config.getFlawlessBonus()
+            : 0;
+    
+        timeBonusScore += timeBonus;
+        flawlessBonusScore += flawlessBonus;
+    
+        addScore(timeBonus + flawlessBonus);
+    
+        removeObjects(getObjects(EnemyProjectile.class));
+    
+        showText(
+            String.format(
+                java.util.Locale.ROOT,
+                "Onda %d: %.1fs | Tempo: +%d | Sem dano: +%d",
+                currentWave,
+                seconds,
+                timeBonus,
+                flawlessBonus
+            ),
+            getWidth() / 2,
+            145
+        );
     }
 
     private void manageWaves(){
@@ -162,6 +229,8 @@ public class Arena extends World{
         if(!getObjects(Enemy.class).isEmpty()){
             return;
         }
+        
+        completeWave();
 
         if(currentWave == WAVES_PER_STAGE){
             ArenaStage nextStage = currentStage.getNextStage();
@@ -216,6 +285,9 @@ public class Arena extends World{
         }
         
         spawnHealthItem();
+        showText(null, getWidth() / 2, 145);
+        
+        wavePerformance.started();
     }
 
     private void spawnEnemy(Enemy enemy){
@@ -287,6 +359,9 @@ public class Arena extends World{
         }
         
         gamefineshed = true;
+        
+        wavePerformance.finish();
+        
         Greenfoot.setWorld(new FinalScreen(false, score));
     }
     
@@ -310,5 +385,15 @@ public class Arena extends World{
                 showText("X: " + x + " | Y: " + y, 300, 100);
             }
         }
+    }
+    
+    @Override
+    public void started() {
+        wavePerformance.resume();
+    }
+    
+    @Override
+    public void stopped() {
+        wavePerformance.pause();
     }
 }

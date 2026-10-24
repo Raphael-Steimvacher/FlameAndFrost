@@ -79,11 +79,11 @@ public abstract class Enemy extends Actor
             return;
         }
     
-        if (world instanceof Arena) {
-            ((Arena) world).addScore(scoreValue);
-        }
-    
         world.removeObject(this);
+        
+        if (world instanceof Arena) {
+            ((Arena) world).onEnemyDefeated(scoreValue);
+        }
     }
     
     protected double getDistanceFromWizard(Wizard wizard){

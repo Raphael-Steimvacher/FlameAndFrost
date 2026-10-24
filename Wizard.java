@@ -175,6 +175,16 @@ public abstract class Wizard extends Actor
     protected abstract PlayerProjectile createProjectile(int direction, int damage);
     
     public void takeDamage(int amount){
+        World world = getWorld();
+        
+        if(amount <= 0 || world == null | health <= 0){
+            return;
+        }
+        
+        if(world instanceof Arena){
+            ((Arena) world).registerPlayerDamage(amount);
+        }
+        
         health -= amount;
         
         if(health <= 0){
