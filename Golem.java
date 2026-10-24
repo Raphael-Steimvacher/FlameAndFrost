@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Golem extends HybridEnemy{
+    private final String projectileImageName;
     
     public Golem(){
         this("green-golem.png", 300);
