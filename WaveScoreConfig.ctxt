@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=WaveScoreConfig
+comment1.params=flawlessBonus\ timeBonuses
+comment1.target=WaveScoreConfig(int,\ TimeBonus[])
+comment2.params=
+comment2.target=int\ getFlawlessBonus()
+comment3.params=elapsedSeconds
+comment3.target=int\ getTimeBonus(double)
+numComments=4

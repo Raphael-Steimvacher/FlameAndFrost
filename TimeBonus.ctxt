@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=TimeBonus
+comment1.params=maxSeconds\ points
+comment1.target=TimeBonus(int,\ int)
+comment2.params=
+comment2.target=int\ getMaxSeconds()
+comment3.params=
+comment3.target=int\ getPoints()
+numComments=4
