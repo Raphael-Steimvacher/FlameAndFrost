@@ -1,12 +1,14 @@
 #BlueJ class context
 comment0.target=ArenaStage
 comment0.text=\ Lembrando\:\n\ \ \ \ \ \ Superior\n\ \ \ \ \ \ Inferior\n\ \ \ \ \ \ Esquerda\n\ \ \ \ \ \ Direita\n
-comment1.params=displayName\ backgroundImage\ golemImage\ spawnZones\ slimeHealth\ goblinHealth\ skeletonHealth\ golemHealth\ waves
-comment1.target=ArenaStage(java.lang.String,\ java.lang.String,\ java.lang.String,\ int[][],\ int,\ int,\ int,\ int,\ WaveConfig[])
+comment1.params=displayName\ backgroundImage\ golemImage\ spawnZones\ slimeHealth\ goblinHealth\ skeletonHealth\ golemHealth\ waves\ waveScores
+comment1.target=ArenaStage(java.lang.String,\ java.lang.String,\ java.lang.String,\ int[][],\ int,\ int,\ int,\ int,\ WaveConfig[],\ WaveScoreConfig[])
 comment10.params=waveNumber
 comment10.target=WaveConfig\ getWaveConfig(int)
 comment11.params=
 comment11.target=ArenaStage\ getNextStage()
+comment12.params=waveNumber
+comment12.target=WaveScoreConfig\ getWaveScoreConfig(int)
 comment2.params=
 comment2.target=java.lang.String\ getDisplayName()
 comment3.params=
@@ -23,4 +25,4 @@ comment8.params=
 comment8.target=int\ getSkeletonHealth()
 comment9.params=
 comment9.target=int\ getGolemHealth()
-numComments=12
+numComments=13
