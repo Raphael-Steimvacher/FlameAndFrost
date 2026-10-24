@@ -177,7 +177,7 @@ public abstract class Wizard extends Actor
     public void takeDamage(int amount){
         World world = getWorld();
         
-        if(amount <= 0 || world == null | health <= 0){
+        if(amount <= 0 || world == null || health <= 0){
             return;
         }
         

@@ -10,17 +10,33 @@ public class Golem extends HybridEnemy{
         this(imageName, 300);
     }
     
-    public Golem(String imageName, int health){
-        super(health, 1, 25, 100, 100, 350, 90, 120);
-        
+    public Golem(String imageName, int health) {
+        this(imageName, health, "rock-projectile.png");
+    }
+
+    public Golem(String imageName, int health, String projectileImageName) {
+        super(
+            health,
+            1,
+            25,
+            100,
+            100,
+            350,
+            90,
+            120
+        );
+
+        this.projectileImageName = projectileImageName;
+
         GreenfootImage image = new GreenfootImage(imageName);
+
         image.scale(140, 140);
         setImage(image);
     }
     
     @Override
     protected void rangedAttack(int direction){
-        RockProjectile rock = new RockProjectile(direction, getDamage());
+        RockProjectile rock = new RockProjectile(direction, getDamage(), projectileImageName);
         
         getWorld().addObject(rock, getX(), getY());
     }

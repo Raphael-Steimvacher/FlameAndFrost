@@ -272,7 +272,8 @@ public class Arena extends World{
         if(currentWave == WAVES_PER_STAGE){
             Golem golem = new Golem(
                 currentStage.getGolemImage(),
-                currentStage.getGolemHealth()
+                currentStage.getGolemHealth(),
+                currentStage.getGolemProjectileImage()
             );
             
             spawnEnemy(golem);
@@ -287,7 +288,7 @@ public class Arena extends World{
         spawnHealthItem();
         showText(null, getWidth() / 2, 145);
         
-        wavePerformance.started();
+        wavePerformance.start();
     }
 
     private void spawnEnemy(Enemy enemy){

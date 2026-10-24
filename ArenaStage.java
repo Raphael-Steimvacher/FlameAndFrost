@@ -12,6 +12,7 @@ public enum ArenaStage {
         "Floresta",
         "arena-floresta-1600x800.png",
         "green-golem.png",
+        "rock-projectile.png",
         new int[][] {
             {550, 950, 0, 130},
             {550, 1050, 700, 799},
@@ -68,6 +69,7 @@ public enum ArenaStage {
         "Deserto",
         "arena-deserto-1600x800.png",
         "dust-golem.png",
+        "sand-rock-projectile.png",
         new int[][] {
             {650, 900, 115, 190},
             {535, 1080, 660, 750},
@@ -124,6 +126,7 @@ public enum ArenaStage {
         "Lava",
         "arena-vulcão-1600x800.png",
         "lava-golem.png",
+        "lava-rock-projectile.png",
         new int[][] {
             {630, 920, 100, 150},
             {610, 970, 560, 660},
@@ -186,6 +189,7 @@ public enum ArenaStage {
     private final int goblinHealth;
     private final int skeletonHealth;
     private final int golemHealth;
+    private final String golemProjectileImage;
     
     private final WaveConfig[] waves;
     private final WaveScoreConfig[] waveScores;
@@ -194,6 +198,7 @@ public enum ArenaStage {
         String displayName,
         String backgroundImage,
         String golemImage,
+        String golemProjectileImage,
         int[][] spawnZones,
         int slimeHealth,
         int goblinHealth,
@@ -205,6 +210,7 @@ public enum ArenaStage {
         this.displayName = displayName;
         this.backgroundImage = backgroundImage;
         this.golemImage = golemImage;
+        this.golemProjectileImage = golemProjectileImage;
         this.spawnZones = spawnZones;
         
         this.slimeHealth = slimeHealth;
@@ -278,5 +284,9 @@ public enum ArenaStage {
         }
     
         return waveScores[waveNumber - 1];
+    }
+    
+    public String getGolemProjectileImage() {
+        return golemProjectileImage;
     }
 }

@@ -7,6 +7,10 @@ public class HealthItem extends Item
     
     public HealthItem(int healAmount){
         this.healAmount = healAmount;
+        
+        GreenfootImage image = new GreenfootImage("health-potion.png");
+        image.scale(48, 48);
+        setImage(image);
     }
     
     public void act(){
